@@ -15,7 +15,7 @@ type Props = {
 export function Classification({ data }: Props) {
   return (
     <View style={styles.container}>
-        <Text style={styles.probability}>{data.probability}</Text>
+        <Text style={styles.probability}>{data.probability.toFixed(3)}</Text>
         <Text style={styles.className}>{data.className}</Text>
     </View>
   );

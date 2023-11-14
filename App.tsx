@@ -10,11 +10,12 @@ import { decodeJpeg } from '@tensorflow/tfjs-react-native';
 
 import { styles } from './styles';
 import { Button } from './components/Button';
-import { Classification } from './components/Classification';
+import { Classification, ClassificationProps } from './components/Classification';
 
 export default function App() {
-  const [selectedImageUri, setSelectedImageUri] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedImageUri, setSelectedImageUri] = useState('');
+  const [results, setResults] = useState<ClassificationProps[]>([]);
 
   async function handleSelectImage() {
     setIsLoading(true);
@@ -38,6 +39,7 @@ export default function App() {
   }
 
   async function imageClassification(imageUri: string) {
+    setResults([]);
     await tensorflow.ready();
     const model = await mobilenet.load();
 
@@ -50,7 +52,7 @@ export default function App() {
     const imageTensor = decodeJpeg(raw);
 
     const classificationResult = await model.classify(imageTensor);
-    console.log( classificationResult);
+    setResults( classificationResult);
   }
 
   return (
@@ -70,7 +72,11 @@ export default function App() {
       />
 
       <View style={styles.results}>
-        <Classification data={{ className: 'teste', probability: 3 }} />
+        {
+          results.map((result) => (
+            <Classification key={result.className} data={result} />
+          ))
+        }
       </View>
 
       {
