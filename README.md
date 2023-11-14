@@ -9,6 +9,7 @@
 - [x] Expo GLView
 - [x] Expo Camera
 - [x] Expo AsyncStorage
+- [x] Expo FileSystem
 - [x] Expo-gl-cpp
 - [x] Typescript
 - [x] React Native
